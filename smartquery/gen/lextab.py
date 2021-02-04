@@ -1,0 +1,10 @@
+# lextab.py. This file automatically created by PLY (version 3.11). Don't edit!
+_tabversion   = '3.10'
+_lextokens    = set(('AND', 'ASSIGN', 'BREAK', 'COLON', 'COMMA', 'COMMENT', 'CONTINUE', 'DEF', 'DEL', 'DIVIDE', 'DOT', 'ELIF', 'ELSE', 'EQ', 'FALSE', 'FOR', 'GT', 'GTE', 'IF', 'IN', 'LAMBDA', 'LBRACE', 'LBRACKET', 'LPAREN', 'LT', 'LTE', 'MINUS', 'NAME', 'NE', 'NEWLINE', 'NONE', 'NOT', 'NUMBER', 'OR', 'PIPE', 'PLUS', 'POWER', 'RAISE', 'RBRACE', 'RBRACKET', 'RPAREN', 'SHORT_OP', 'STRING', 'TIMES', 'TRUE', 'WHILE'))
+_lexreflags   = 64
+_lexliterals  = ''
+_lexstateinfo = {'INITIAL': 'inclusive'}
+_lexstatere   = {'INITIAL': [('(?P<t_STRING> (r?\\"([^\\\\\\n]|(\\\\.))*?\\") | (r?\\\'([^\\\\\\n]|(\\\\.))*?\\\') )|(?P<t_NUMBER> \\d+(\\.\\d+)? )|(?P<t_NAME> (%.*?%) | ([^\\W\\d][\\w0-9_]*([\\w_][\\w0-9_]*)*) )|(?P<t_COMMENT> \\043.* )|(?P<t_NEWLINE>\\r\\n|\\n|;)|(?P<t_SHORT_OP>[+\\-\\*/]=)|(?P<t_POWER>\\*\\*)|(?P<t_DOT>\\.)|(?P<t_EQ>==)|(?P<t_GTE>>=)|(?P<t_LAMBDA>=>)|(?P<t_LBRACKET>\\[)|(?P<t_LPAREN>\\()|(?P<t_LTE><=)|(?P<t_NE>!=)|(?P<t_PIPE>\\|)|(?P<t_PLUS>\\+)|(?P<t_RBRACKET>\\])|(?P<t_RPAREN>\\))|(?P<t_TIMES>\\*)|(?P<t_ASSIGN>=)|(?P<t_COLON>:)|(?P<t_COMMA>,)|(?P<t_DIVIDE>/)|(?P<t_GT>>)|(?P<t_LBRACE>{)|(?P<t_LT><)|(?P<t_MINUS>-)|(?P<t_RBRACE>})', [None, ('t_STRING', 'STRING'), None, None, None, None, None, None, ('t_NUMBER', 'NUMBER'), None, ('t_NAME', 'NAME'), None, None, None, ('t_COMMENT', 'COMMENT'), (None, 'NEWLINE'), (None, 'SHORT_OP'), (None, 'POWER'), (None, 'DOT'), (None, 'EQ'), (None, 'GTE'), (None, 'LAMBDA'), (None, 'LBRACKET'), (None, 'LPAREN'), (None, 'LTE'), (None, 'NE'), (None, 'PIPE'), (None, 'PLUS'), (None, 'RBRACKET'), (None, 'RPAREN'), (None, 'TIMES'), (None, 'ASSIGN'), (None, 'COLON'), (None, 'COMMA'), (None, 'DIVIDE'), (None, 'GT'), (None, 'LBRACE'), (None, 'LT'), (None, 'MINUS'), (None, 'RBRACE')])]}
+_lexstateignore = {'INITIAL': ' \t'}
+_lexstateerrorf = {'INITIAL': 't_error'}
+_lexstateeoff = {}

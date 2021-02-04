@@ -1,0 +1,10 @@
+image: python:3.8-slim
+
+master-job:
+  only:
+    - master
+  script:
+    - pip install -U setuptools pip twine wheel
+    - python setup.py sdist
+    - python setup.py bdist_wheel
+    - twine upload dist/*

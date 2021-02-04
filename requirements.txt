@@ -1,0 +1,7 @@
+regex==2020.11.13
+prompt-toolkit==3.0.14
+
+# CI
+pytest==6.2.2
+pylint==2.6.0
+mypy==0.800
