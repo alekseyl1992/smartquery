@@ -6,7 +6,7 @@ from typing import Any, List
 import copy
 
 from smartquery.custom_types import Decimal
-from smartquery.exceptions import ParserError
+from smartquery.exceptions import ParserError, OpsExecutionLimitExceededError
 from smartquery.functions import FUNCTIONS, _dict_key_cast
 from smartquery.utils import safe_cast
 from smartquery.vm_state import VMState
@@ -16,7 +16,7 @@ class Op(ABC):
     def eval(self, state: VMState):
         state.ops_evaluated += 1
         if state.ops_evaluated >= state.max_ops_evaluated:
-            raise ParserError(f'Ops execution limit exceeded: {state.max_ops_evaluated}')
+            raise OpsExecutionLimitExceededError(f'Ops execution limit exceeded: {state.max_ops_evaluated}')
 
 
 @dataclass
