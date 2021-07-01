@@ -16,6 +16,7 @@ from smartquery.exceptions import ParserError
 
 REGEX_TIMEOUT = 0.05
 MAX_ARRAY_SIZE = 10000
+CAST_DICT_KEYS_TO_STRINGS = True  # for JSON serialisation compatability
 
 
 def pretty(value: Any, sep=...) -> str:
@@ -75,19 +76,36 @@ def _sum(value: Any) -> Any:
 
 
 def _get(container: Any, key: Any, default=None) -> Any:
-    key = _dict_key_cast(key)
+    key = _key_cast(container, key)
     return container.get(key, default)
 
 
-def _dict_key_cast(key: Any) -> Any:
+def _key_cast(container: Any, key: Any) -> Any:
+    if isinstance(container, dict):
+        return _dict_key_cast(key)
+    else:
+        return _list_key_cast(key)
+
+
+def _list_key_cast(key: Any) -> Any:
     if isinstance(key, Decimal_):
         return int(key)
 
     return key
 
 
+def _dict_key_cast(key: Any) -> Any:
+    if CAST_DICT_KEYS_TO_STRINGS:
+        return str(key)
+    else:
+        if isinstance(key, Decimal_):
+            return int(key)
+
+    return key
+
+
 def _get_item(container: Any, key: Any) -> Any:
-    key = _dict_key_cast(key)
+    key = _key_cast(container, key)
 
     try:
         return container[key]
@@ -96,7 +114,7 @@ def _get_item(container: Any, key: Any) -> Any:
 
 
 def _del(container: Any, key: Any) -> Any:
-    key = _dict_key_cast(key)
+    key = _key_cast(container, key)
 
     if isinstance(container, dict):
         if key in container:
@@ -109,7 +127,7 @@ def _del(container: Any, key: Any) -> Any:
 def _set(container: Any, key: Any, value: Any) -> Any:
     _check_array_size(container)
 
-    key = _dict_key_cast(key)
+    key = _key_cast(container, key)
 
     container[key] = copy.deepcopy(value)
     return value
@@ -118,7 +136,7 @@ def _set(container: Any, key: Any, value: Any) -> Any:
 def _set_with_op(container: Any, key: Any, op: str, value: Any) -> Any:
     _check_array_size(container)
 
-    key = _dict_key_cast(key)
+    key = _key_cast(container, key)
     value = copy.deepcopy(value)
 
     if op == '+=':
