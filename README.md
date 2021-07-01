@@ -5,4 +5,4 @@ It aims to safely run untrusted third-party code.
 
 Documentation: https://docs.smartbot-vk.ru/smartquery/vvedenie
 
-It is based on `ply` library and uses Python runtime to implement all the functions and opearations.
+It is based on `ply` library and uses Python runtime to implement all the functions and operations.
