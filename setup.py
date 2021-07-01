@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.1.3'
+version = '0.1.4'
 
 setup(
     name="smartquery",
@@ -10,7 +10,7 @@ setup(
                      ' designed to be easily embedded in other programs',
     author='Aleksey Leontiev',
     author_email='alekseyl@list.ru',
-    license='BSD',
+    license='CC BY-NC-SA 4.0',
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
