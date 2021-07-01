@@ -300,7 +300,7 @@ class TestDicts(TestCase):
         }
 
         self.assertEqual(self.parser.eval(
-            '%корзина% | map(k, v => k + ": " + v + " кг") | join', names={
+            '%корзина% | map((k, v) => k + ": " + v + " кг") | join', names={
                 '%корзина%': data,
             }), r'''
                 пончик: 1 кг
@@ -441,7 +441,7 @@ class TestArrays(TestCase):
         self.assertEqual(self.parser.eval('[1, 2, 3] | map(v => v * 2)'), [2, 4, 6])
 
     def test_reduce(self):
-        self.assertEqual(self.parser.eval('[1, 2, 3] | reduce(acc, v => acc + v)'), 6)
+        self.assertEqual(self.parser.eval('[1, 2, 3] | reduce((acc, v) => acc + v)'), 6)
 
     def test_push(self):
         names = {

@@ -97,9 +97,13 @@ def p_expression_method_call(p):
 
 
 def p_expression_lambda(p):
-    """ expression : arglist LAMBDA expression
+    """ expression : NAME LAMBDA expression
+                   | LPAREN arglist_def RPAREN LAMBDA expression
     """
-    p[0] = LambdaOp(args=p[1], expr=p[3])
+    if len(p) == 4:
+        p[0] = LambdaOp(args=[NameOp(p[1])], expr=p[3])
+    else:
+        p[0] = LambdaOp(args=p[2], expr=p[5])
 
 
 def p_dict_item(p):
@@ -260,6 +264,16 @@ def p_arglist(p):
         p[0] = p[1] + [p[3]]
     else:
         p[0] = [p[1]]
+
+
+def p_arglist_def(p):
+    """ arglist_def : arglist COMMA NAME
+                    | NAME
+    """
+    if len(p) == 4:
+        p[0] = p[1] + [NameOp(p[3])]
+    else:
+        p[0] = [NameOp(p[1])]
 
 
 def p_error(p):
