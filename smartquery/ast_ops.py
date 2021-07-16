@@ -12,6 +12,9 @@ from smartquery.utils import safe_cast
 from smartquery.vm_state import VMState
 
 
+NUMERIC_TYPES = (Decimal_, int, float)
+
+
 class Op(ABC):
     def eval(self, state: VMState):
         state.ops_evaluated += 1
@@ -70,7 +73,7 @@ class BinOp(Op):
         elif self.op == '-':
             return op1 - op2
         elif self.op == '*':
-            if not isinstance(op1, Decimal_) or not isinstance(op2, Decimal_):
+            if not isinstance(op1, NUMERIC_TYPES) or not isinstance(op2, NUMERIC_TYPES):
                 raise ParserError(f'Can\'t multiply non-numbers')
 
             return op1 * op2
