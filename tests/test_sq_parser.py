@@ -227,6 +227,27 @@ def test_space_string(parser, expr, names, expected):
     assert parser.eval(expr, names=names) == expected
 
 
+def test_custom_python_functions(parser):
+    assert parser.eval('test(2, 2)', names={
+        'test': lambda a, b: a + b
+    }) == 4
+
+
+def test_custom_python_functions_override_priority(parser):
+    assert parser.eval('lower("abc")', names={
+        'lower': str.upper,
+    }) == "ABC"
+
+
+def test_custom_sq_functions(parser):
+    assert parser.eval(
+        r'''
+        test = (a, b) => a + b
+        test(2, 2)
+        '''
+    ) == 4
+
+
 class TestSqParserFail(TestCase):
     @classmethod
     def setUpClass(cls):

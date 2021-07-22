@@ -3,6 +3,7 @@ from typing import Any, Iterable, cast, MutableMapping, Optional
 
 from smartquery import lexer, rules
 from smartquery.ast_ops import Op
+from smartquery.functions import FUNCTIONS
 from smartquery.ply import lex, yacc
 from smartquery.scoped_dict import ScopedDict
 from smartquery.vm_state import VMState
@@ -48,7 +49,8 @@ class SqParser:
         return cast(Op, self.lex.ast)
 
     def eval(self, expr: str, names: dict = None, max_ops_evaluated: int = 100) -> Any:
-        scoped_names = ScopedDict(names if names is not None else {})
+        scoped_names = ScopedDict({**FUNCTIONS})
+        scoped_names.push_scope(names if names is not None else {})
 
         if self.parse_cache is None or expr not in self.parse_cache:
             ast = self.parse(expr=expr)

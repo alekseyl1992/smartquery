@@ -7,7 +7,7 @@ import copy
 
 from smartquery.custom_types import Decimal
 from smartquery.exceptions import ParserError, OpsExecutionLimitExceededError
-from smartquery.functions import FUNCTIONS, _dict_key_cast
+from smartquery.functions import _dict_key_cast
 from smartquery.utils import safe_cast
 from smartquery.vm_state import VMState
 
@@ -219,7 +219,7 @@ class CallOp(Op):
             arg.eval(state) for arg in self.args
         ]
         try:
-            f = FUNCTIONS[self.name]
+            f = state.names[self.name]
         except LookupError:
             raise ParserError(f'Undefined function {self.name}')
 
