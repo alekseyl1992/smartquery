@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Iterable, cast, MutableMapping, Optional
+from typing import Any, Iterable, cast, MutableMapping, Optional, Dict
 
 from smartquery import lexer, rules
 from smartquery.ast_ops import Op
@@ -60,8 +60,8 @@ class SqParser:
     def eval(
         self,
         expr: str,
-        names: dict[str, Any] = None,
-        ast_names: dict[str, Op] = None,
+        names: Dict[str, Any] = None,
+        ast_names: Dict[str, Op] = None,
         max_ops_evaluated: int = 100,
     ) -> Any:
         scoped_names = ScopedDict({**FUNCTIONS})
