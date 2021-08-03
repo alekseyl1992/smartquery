@@ -41,26 +41,41 @@ class SqParser:
                 yield t.value
 
     def parse(self, expr: str) -> Op:
-        self.lex.lexpos = 0
-        self.lex.lineno = 1
+        if self.parse_cache is None or expr not in self.parse_cache:
+            self.lex.lexpos = 0
+            self.lex.lineno = 1
 
-        self.lex.ast = None
-        self.yacc.parse(input=expr, lexer=self.lex)
-        return cast(Op, self.lex.ast)
+            self.lex.ast = None
+            self.yacc.parse(input=expr, lexer=self.lex)
 
-    def eval(self, expr: str, names: dict = None, max_ops_evaluated: int = 100) -> Any:
+            ast = cast(Op, self.lex.ast)
+
+            if self.parse_cache is not None:
+                self.parse_cache[expr] = ast
+
+            return ast
+        else:
+            return self.parse_cache[expr]
+
+    def eval(
+        self,
+        expr: str,
+        names: dict[str, Any] = None,
+        ast_names: dict[str, Op] = None,
+        max_ops_evaluated: int = 100,
+    ) -> Any:
         scoped_names = ScopedDict({**FUNCTIONS})
         scoped_names.push_scope(names if names is not None else {})
 
-        if self.parse_cache is None or expr not in self.parse_cache:
-            ast = self.parse(expr=expr)
-            if self.parse_cache is not None:
-                self.parse_cache[expr] = ast
-        else:
-            ast = self.parse_cache[expr]
+        ast = self.parse(expr=expr)
 
         if ast is not None:
             state = VMState(names=scoped_names, max_ops_evaluated=max_ops_evaluated)
+
+            if ast_names is not None:
+                for k, v in ast_names.items():
+                    scoped_names[k] = v.eval(state)
+
             return ast.eval(state)
         else:
             return None

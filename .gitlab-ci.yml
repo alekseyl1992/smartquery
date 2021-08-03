@@ -4,6 +4,8 @@ master-job:
   only:
     - master
   script:
+    - pip install mypy==0.910
+    - mypy smartquery
     - pip install -U setuptools pip twine wheel
     - python setup.py sdist
     - python setup.py bdist_wheel

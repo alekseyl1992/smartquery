@@ -3,6 +3,7 @@ from unittest import TestCase
 
 import pytest
 
+from smartquery.ast_ops import LambdaOp, NameOp
 from smartquery.exceptions import ParserError
 from smartquery.sq_parser import SqParser
 from tests.utils import measure_for_tests
@@ -246,6 +247,27 @@ def test_custom_sq_functions(parser):
         test(2, 2)
         '''
     ) == 4
+
+
+def test_custom_ast_functions(parser):
+    f_body = parser.parse('\n'.join([
+        'c = a + b',
+        'c * 2',
+    ]))
+
+    f = LambdaOp(args=[
+        NameOp('a'),
+        NameOp('b'),
+    ], expr=f_body)
+
+    assert parser.eval(
+        r'''
+        f(1, 2)
+        ''',
+        ast_names={
+            'f': f,
+        },
+    ) == 6
 
 
 class TestSqParserFail(TestCase):
