@@ -76,7 +76,7 @@ class BinOp(Op):
             if not isinstance(op1, NUMERIC_TYPES) or not isinstance(op2, NUMERIC_TYPES):
                 raise ParserError(f'Can\'t multiply non-numbers')
 
-            return op1 * op2
+            return Decimal(op1) * Decimal(op2)
         elif self.op == '**':
             # explicitly cast to Decimal to avoid powering of big integers
             return Decimal(op1) ** Decimal(op2)
