@@ -1,5 +1,5 @@
 # smartquery
-[![GitHub Actions](https://github.com/alekseyl1992/smartquery/workflows/Python/badge.svg)](https://github.com/alekseyl1992/smartquery/actions?query=workflow%3APython)
+[![GitHub Actions](https://github.com/alekseyl1992/smartquery/workflows/release/badge.svg)](https://github.com/alekseyl1992/smartquery/actions?query=workflow%3Arelease)
 [![PyPI](https://img.shields.io/pypi/v/smartquery.svg)](https://pypi.org/project/smartquery)
 
 SmartQuery is a simple interpreted programming language designed to be easily embedded in other programs.
