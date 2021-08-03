@@ -1,12 +1,14 @@
 # smartquery
+[![GitHub Actions](https://github.com/alekseyl1992/smartquery/workflows/Python/badge.svg)](https://github.com/alekseyl1992/smartquery/actions?query=workflow%3APython)
+[![PyPI](https://img.shields.io/pypi/v/smartquery.svg)](https://pypi.org/project/smartquery)
 
 SmartQuery is a simple interpreted programming language designed to be easily embedded in other programs.
 It aims to safely run untrusted third-party code.
 
-It is based on `ply` library and uses Python runtime to implement all the functions and operations.
+It is based on [ply](https://github.com/dabeaz/ply) library and uses Python runtime to implement all the functions and operations.
 
 ## Documentation
-https://docs.smartbot-vk.ru/smartquery/vvedenie
+https://docs.smartbot-vk.ru/smartquery
 
 ## Installation
 ```bash
@@ -26,5 +28,10 @@ parser.eval('x * y', names=data)
 
 ## Run REPL
 ```bash
+pip install smartquery[repl]
 python -m smartquery
 ```
+
+
+## Have questions?
+Please contact me via [email](mailto:alekseyl@list.ru)
