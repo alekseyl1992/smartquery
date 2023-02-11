@@ -53,20 +53,56 @@ t_MINUS = r'-'
 t_TIMES = r'\*'
 t_POWER = r'\*\*'
 t_DIVIDE = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
 t_COMMA = r','
 t_DOT = r'\.'
 t_PIPE = r'\|'
 t_COLON = r':'
 
-t_LBRACKET = r'\['
-t_RBRACKET = r'\]'
 
-t_LBRACE = r'{'
-t_RBRACE = r'}'
+def t_NEWLINE(t):
+    r"""\r\n|\n|;"""
+    if t.value == ';' or t.lexer.paren_count == 0:
+        t.lexer.lineno += 1
+        return t
+    else:
+        # ignore newlines inside of parens, braces and brackets
+        return None
 
-t_NEWLINE = r'\r\n|\n|;'
+
+def t_LPAREN(t):
+    r"""\("""
+    t.lexer.paren_count += 1
+    return t
+
+
+def t_RPAREN(t):
+    r"""\)"""
+    t.lexer.paren_count -= 1
+    return t
+
+
+def t_LBRACKET(t):
+    r"""\["""
+    t.lexer.paren_count += 1
+    return t
+
+
+def t_RBRACKET(t):
+    r"""\]"""
+    t.lexer.paren_count -= 1
+    return t
+
+
+def t_LBRACE(t):
+    r"""{"""
+    t.lexer.paren_count += 1
+    return t
+
+
+def t_RBRACE(t):
+    r"""}"""
+    t.lexer.paren_count -= 1
+    return t
 
 
 def t_STRING(t):

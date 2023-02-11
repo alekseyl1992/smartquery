@@ -30,6 +30,7 @@ class SqParser:
     def list_names(self, expr: str) -> Iterable[str]:
         self.lex.lexpos = 0
         self.lex.lineno = 1
+        self.lex.paren_count = 0
 
         self.lex.input(expr)
 
@@ -44,6 +45,7 @@ class SqParser:
         if self.parse_cache is None or expr not in self.parse_cache:
             self.lex.lexpos = 0
             self.lex.lineno = 1
+            self.lex.paren_count = 0
 
             self.lex.ast = None
             self.yacc.parse(input=expr, lexer=self.lex)
@@ -67,7 +69,7 @@ class SqParser:
         scoped_names = ScopedDict({**FUNCTIONS})
         scoped_names.push_scope(names if names is not None else {})
 
-        ast = self.parse(expr=expr)
+        ast = self.parse(expr=expr.rstrip())
 
         if ast is not None:
             state = VMState(names=scoped_names, max_ops_evaluated=max_ops_evaluated)

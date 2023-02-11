@@ -270,6 +270,49 @@ def test_custom_ast_functions(parser):
     ) == 6
 
 
+def test_call_multiline(parser):
+    assert parser.eval('''
+    len(
+        [1, 2, 3]
+    )
+    ''') == 3
+
+
+def test_list_multiline(parser):
+    assert parser.eval('''
+    [
+        1, 2,
+        3
+    ]
+    ''') == [1, 2, 3]
+
+
+def test_dict_multiline(parser):
+    assert parser.eval('''
+    {
+        'a': {
+            'b': 20
+        }
+    }
+    ''') == {
+        'a': {
+            'b': 20,
+        },
+    }
+
+
+def test_trailing_comma_list(parser):
+    assert parser.eval('[1, 2, 3,]') == [1, 2, 3, ]
+
+
+def test_trailing_comma_dict(parser):
+    assert parser.eval("{'a': 10,}") == {'a': 10, }
+
+
+def test_trailing_comma_call(parser):
+    assert parser.eval('max(1, 2, )') == max(1, 2, )
+
+
 class TestSqParserFail(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -612,7 +655,7 @@ class TestMultiline(TestCase):
         assert self.parser.eval('2 * 2; 5 * 5') == 25
 
     def test_error(self):
-        with self.assertRaisesRegex(ParserError, 'Syntax error: asd at line 4'):
+        with self.assertRaisesRegex(ParserError, 'Syntax error: asd at line 5'):
             self.parser.eval(r'''
                 x = 10
                 y = 20

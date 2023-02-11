@@ -16,9 +16,6 @@ def p_code(p):
     if len(p) == 2:
         p.lexer.ast = CodeOp([p[1]]) if p[1] is not None else CodeOp([])
     else:
-        if p[2] == '\n':
-            p.lexer.lineno += 1
-
         if p[3] is not None:
             p.lexer.ast.lines.append(p[3])
 
@@ -76,9 +73,10 @@ def p_statement_short_op(p):
 
 def p_expression_call(p):
     """ expression : NAME LPAREN arglist RPAREN
+                   | NAME LPAREN arglist COMMA RPAREN
                    | NAME LPAREN RPAREN
     """
-    if len(p) == 5:
+    if len(p) >= 5:
         p[0] = CallOp(p[1], args=p[3])
     else:
         p[0] = CallOp(p[1], args=[])
@@ -87,11 +85,16 @@ def p_expression_call(p):
 def p_expression_method_call(p):
     """ expression : expression DOT NAME LPAREN arglist RPAREN
                    | expression PIPE NAME LPAREN arglist RPAREN
+                   | expression DOT NAME LPAREN arglist COMMA RPAREN
+                   | expression PIPE NAME LPAREN arglist COMMA RPAREN
                    | expression DOT NAME LPAREN RPAREN
                    | expression PIPE NAME
     """
-    if len(p) == 7:
+    len_p = len(p)
+    if len_p == 7:
         p[0] = CallOp(p[3], args=[p[1], *p[5]])
+    elif len_p == 8:
+        p[0] = CallOp(p[3], args=[p[1], *p[5][:-1]])
     else:
         p[0] = CallOp(p[3], args=[p[1]])
 
@@ -142,6 +145,7 @@ def p_expression_binop(p):
 def p_list_literal(p):
     """ expression : LBRACKET RBRACKET
                    | LBRACKET arglist RBRACKET
+                   | LBRACKET arglist COMMA RBRACKET
     """
     if len(p) == 3:
         p[0] = CallOp(name='list', args=[])
@@ -152,6 +156,7 @@ def p_list_literal(p):
 def p_dict_literal(p):
     """ expression : LBRACE RBRACE
                    | LBRACE dict_item RBRACE
+                   | LBRACE dict_item COMMA RBRACE
     """
     if len(p) == 3:
         p[0] = CallOp(name='dict', args=[])

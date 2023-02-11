@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.1.7'
+version = '0.1.8'
 
 setup(
     name="smartquery",
@@ -19,6 +19,7 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     install_requires=[
@@ -27,7 +28,7 @@ setup(
     ],
     extras_require={
         'repl': [
-            'prompt-toolkit==3.0.14',
+            'prompt-toolkit==3.0.36',
         ],
     },
 )
