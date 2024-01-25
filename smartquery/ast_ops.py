@@ -1,5 +1,5 @@
 from abc import ABC
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import Decimal as Decimal_
 from typing import Any, List
 
@@ -193,9 +193,9 @@ class IfExprOp(Op):
 
 @dataclass
 class SliceOp(Op):
-    start: Op = ValueOp(None)
-    stop: Op = ValueOp(None)
-    step: Op = ValueOp(None)
+    start: Op = field(default_factory=lambda: ValueOp(None))
+    stop: Op = field(default_factory=lambda: ValueOp(None))
+    step: Op = field(default_factory=lambda: ValueOp(None))
 
     def eval(self, state: VMState):
         super().eval(state)

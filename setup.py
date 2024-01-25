@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.1.8'
+version = '0.1.9'
 
 setup(
     name="smartquery",
@@ -20,6 +20,7 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
     ],
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     install_requires=[
